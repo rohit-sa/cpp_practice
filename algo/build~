@@ -1,0 +1,45 @@
+# EE569 Homework Assignment #2
+# Date: Feb 26, 2017
+# Name: Rohit Annigeri
+# ID: 5419163702
+# email: annigeri@usc.edu
+#
+# Compiled on Linux with g++
+
+
+CC = g++
+CFLAGS = -std=c++11 -w -Wall
+
+all: ans1 ans2 ans3
+	
+	
+ans1: geometric_modification.o
+	$(CC) $(CFLAGS) -o ans1 geometric_modification.o
+	./ans1
+	
+geometric_modification.o: geometric_modification.cpp image_info.h
+	$(CC) $(CFLAGS) -c geometric_modification.cpp
+	
+ans2: halftoning.o
+	$(CC) $(CFLAGS) -o ans2 halftoning.o
+	./ans2
+	
+halftoning.o: halftoning.cpp image_info.h
+	$(CC) $(CFLAGS) -c halftoning.cpp
+
+ans3: morph_processing.o
+	$(CC) $(CFLAGS) -o ans3 morph_processing.o
+	./ans3
+	
+morph_processing.o: morph_processing.cpp image_info.h
+	$(CC) $(CFLAGS) -c morph_processing.cpp
+
+.PHONY: clean clean_images 
+
+clean_images:
+	-rm -f *.raw
+
+
+clean: clean_images
+	-rm -f *.o ans1 ans2 ans3
+

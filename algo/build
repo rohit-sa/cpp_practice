@@ -1,0 +1,18 @@
+# Compiled on Linux with g++
+
+CC = g++
+CFLAGS = -std=c++11 -w -Wall
+
+all: ans
+	
+ans: sorting.o
+	$(CC) $(CFLAGS) -o ans sorting.o linked_list.cpp
+	./ans
+	
+sorting.o: sorting.cpp linked_list.h
+	$(CC) $(CFLAGS) -c sorting.cpp
+
+.PHONY: clean 
+
+clean:
+	-rm -f *.o ans
