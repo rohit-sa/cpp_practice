@@ -338,7 +338,7 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
 	ListNode* q = l2;
 	ListNode* merge_list = new ListNode(0);
 	ListNode* r = merge_list;
-	if(p == NULL || q == NULL){
+	if(p == NULL && q == NULL){
 		return NULL;
 	}
 	while(p != NULL && q != NULL){
@@ -352,7 +352,92 @@ ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
 		}
 		r = r->next;
 	}
+	if(p != NULL){
+		r->next = p;
+	}
+	else{
+		r->next = q;
+	}
+	
 	return merge_list->next;
+}
+
+int removeDuplicates(vector<int>& nums) {
+	int len = nums.size();
+	if(len < 2){
+		return 1;
+	}
+	int id = 1;
+	for(int i = 1; i < len; i++){
+		if(nums[i] > nums[i-1]){
+			nums[id] = nums[i];
+			id++;
+		}
+	}
+	return id;
+}
+
+int strStr(string haystack, string needle) {
+	int haystack_len = haystack.size();
+	int needle_len = needle.size();
+	if(needle_len == 0){
+		return 0;
+	}
+	if(needle_len > haystack_len){
+		return -1;
+	}
+	for(int i = 0; i <= haystack_len-needle_len; i++){
+		int j = 0;
+		for(; j < needle_len; j++){
+			if(haystack.at(i+j) != needle.at(j)){
+				break;
+			}
+		}
+		if(j == needle_len){
+			return i;
+		}
+	}
+	return -1;
+}
+
+int divide(int dividend, int divisor) {
+	int neg = 1;
+	long int num = dividend;
+	long int den = divisor;
+	if(divisor == 0 || (dividend == INT_MIN && divisor == -1)){
+		return INT_MAX;
+	}
+	if(dividend < 0){
+		neg = -neg;
+		num = -num;
+	}
+	if(divisor < 0){
+		neg = -neg;
+		den = -den;
+	}
+	long int res = 0;
+	while(num >= den){
+		long int temp = den;
+		long int quotient = 1;
+		while(num >= (temp << 1)){
+			temp = temp << 1;
+			quotient = quotient << 1;
+		}
+		num = num - temp;
+		res = res + quotient;
+	}
+	if(neg == -1){
+		return -res;
+	}
+	return res;
+}
+
+int search(vector<int>& nums, int target) {
+	int len = nums.size();
+	if(len == 0){
+		return -1;
+	}
+	return -1;
 }
 
 int main(){
