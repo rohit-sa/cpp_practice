@@ -3,6 +3,7 @@
 #include <vector>
 #include <cmath>
 #include <limits.h>
+#include <set>
 
 using namespace std;
 
@@ -437,9 +438,88 @@ int search(vector<int>& nums, int target) {
 	if(len == 0){
 		return -1;
 	}
+	int low = 0, high = len-1;
+	while(low < high){
+		int mid = low + (high-low)/2;
+		if(nums[mid] == target){
+			return mid;
+		}
+		else if(nums[mid] < nums[low]){
+			if(nums[low] <= target || nums[mid] > target){
+				high = mid-1;
+			}
+			else{
+				low = mid+1;
+			}
+		}
+		else{
+			if(nums[low] <= target && nums[mid] > target){
+				high = mid-1;
+			}
+			else{
+				low = mid+1;
+			}
+		}
+	}
+	if(nums[low] == target){
+		return low;
+	}
 	return -1;
 }
 
+vector<int> searchRange(vector<int>& nums, int target) {
+	int len = nums.size();
+	vector <int> result = {-1,-1};
+	if(len == 0){
+		return result;
+	}
+	int low = -1, high = len-1;
+	while(high - low > 1){
+		int mid = low + (high - low)/2;
+		if(nums[mid] < target){
+			low = mid;
+		}
+		else{
+			high = mid;
+		}
+	}
+	if(nums[high] == target){
+		result[0] = high;
+	}
+	low = 0;
+	high = len;
+	while(high - low > 1){
+		int mid = low + (high - low)/2;
+		if(nums[mid] <= target){
+			low = mid;
+		}
+		else{
+			high = mid;
+		}
+	}
+	if(nums[low] == target){
+		result[1] = low;
+	}
+	return result;
+}
+
+bool isValidSudoku(vector<vector<char>>& board) {
+	int rows = board.size();
+	int cols = board[0].size();
+	
+	for(int i = 0; i < rows; i++){
+		vector <char> row = board[i];
+		set<char> row_set;
+		for(int j = 0; j < cols; j++){
+			if(row[j] != '.'){
+				if(row_set.insert(row[j]).second == false){
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+}
 int main(){
 	
 	return 0;
