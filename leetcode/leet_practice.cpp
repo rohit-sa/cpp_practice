@@ -506,13 +506,30 @@ vector<int> searchRange(vector<int>& nums, int target) {
 bool isValidSudoku(vector<vector<char>>& board) {
 	int rows = board.size();
 	int cols = board[0].size();
+	vector<set<char>> col_set(cols);
+	vector<set<char>> box_set(3);
 	
 	for(int i = 0; i < rows; i++){
 		vector <char> row = board[i];
 		set<char> row_set;
+		if(i%3 == 0){
+			box_set[0].clear();
+			box_set[1].clear();
+			box_set[2].clear();
+		}
 		for(int j = 0; j < cols; j++){
-			if(row[j] != '.'){
-				if(row_set.insert(row[j]).second == false){
+			char element = board[i][j];
+			if(element != '.'){
+				if((element-'0'-1) < 0 || (element-'0'-1) > 9){
+					return false;
+				}
+				if(row_set.insert(element).second == false){
+					return false;
+				}
+				if(col_set[j].insert(element).second == false){
+					return false;
+				}
+				if(box_set[j/3].insert(element).second == false){
 					return false;
 				}
 			}
@@ -520,7 +537,13 @@ bool isValidSudoku(vector<vector<char>>& board) {
 	}
 	return true;
 }
+
 int main(){
-	
+	for(int i = 0; i < 9; i++){
+		for(int j = 0; j < 9; j++){
+			cout << i <<','<< j << "	";
+		}
+		cout << endl;
+	}
 	return 0;
 }
