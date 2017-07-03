@@ -18,6 +18,9 @@ class LinkedList{
 		LinkedList();
 		~LinkedList();
 		int insert(std::string key, int value);
+		int remove(std::string key);
+		int get(std::string key);
+		int find(std::string key);
 		void print(void);
 };
 
@@ -29,7 +32,11 @@ class HashTable{
 		HashTable(uint size = 10);
 		~HashTable();
 		uint hash(std::string key);
+		void print();
 		int insert(std::string key, int value);
+		int remove(std::string key);
+		int get(std::string key);
+		int find(std::string key);
 };
 
 
